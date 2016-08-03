@@ -13,12 +13,14 @@ import {
 } from 'react-native';
 import Style from './style';
 import Moment from 'moment';
-
+require('moment/locale/es');
 const FORMATS = {
   'date': 'YYYY-MM-DD',
   'datetime': 'YYYY-MM-DD HH:mm',
   'time': 'HH:mm'
 };
+
+Moment.locale("es");
 
 class DatePicker extends Component {
   constructor(props) {
@@ -226,24 +228,11 @@ class DatePicker extends Component {
     ];
 
     return (
-      <TouchableHighlight
-        style={[Style.dateTouch, this.props.style]}
-        underlayColor={'transparent'}
-        onPress={this.onPressDate}
-      >
-        <View style={[Style.dateTouchBody, customStyles.dateTouchBody]}>
-          <View style={dateInputStyle}>
-            {this.getTitleElement()}
-          </View>
-          {this.props.showIcon && <Image
-            style={[Style.dateIcon, customStyles.dateIcon]}
-            source={this.props.iconSource}
-          />}
+      <View>
           {Platform.OS === 'ios' && <Modal
             transparent={true}
             visible={this.state.modalVisible}
-            onRequestClose={() => {this.setModalVisible(false);}}
-          >
+            onRequestClose={() => {this.setModalVisible(false);}}>
             <TouchableHighlight
               style={Style.datePickerMask}
               activeOpacity={1}
@@ -263,8 +252,7 @@ class DatePicker extends Component {
                     minimumDate={this.props.minDate && this.getDate(this.props.minDate)}
                     maximumDate={this.props.maxDate && this.getDate(this.props.maxDate)}
                     onDateChange={(date) => this.setState({date: date})}
-                    style={[Style.datePicker, customStyles.datePicker]}
-                  />
+                    style={[Style.datePicker, customStyles.datePicker]}/>
                   <TouchableHighlight
                     underlayColor={'transparent'}
                     onPress={this.onPressCancel}
@@ -287,8 +275,8 @@ class DatePicker extends Component {
               </TouchableHighlight>
             </TouchableHighlight>
           </Modal>}
-        </View>
-      </TouchableHighlight>
+          </View>
+
     );
   }
 }
